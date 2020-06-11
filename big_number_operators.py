@@ -1,35 +1,35 @@
-number_1 = '9000000000000000000000000000000000000000000000000000000000000'
-number_2 = '9000000000000000000000000000000000000000000000000000000000000'
+from datetime import datetime
+
+number_1 = '999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999'
+number_2 = '888888888888888888888888888999999999999999999999999999999999999999999999999999999999999999999999999999999'
 
 
 def multiply_big_number(str_number1, str_number2) -> str:
     result = ''
-    str_number1 = list(str_number1)
-    str_number2 = list(str_number2)
     i = 0
-    list_item = list()
+    list_sub_number = list()
     for i in range(1, len(str_number1) + 1):
         a = int(str_number1[0 - i])
         carry = 0
-        item = ''
+        sub_number = ''
         for j in range(1, len(str_number2) + 1):
             b = int(str_number2[0 - j])
             c = a * b + carry
             carry = c // 10
             n = c % 10
-            item = str(n) + item
+            sub_number = str(n) + sub_number
         if carry != 0:
-            item = str(carry) + item
-        zero = "".zfill(i - 1)
-        item += zero
-        list_item.append(item)
+            sub_number = str(carry) + sub_number
+        zero = "0" * (i - 1)
+        sub_number += zero
+        list_sub_number.append(sub_number)
         i += 1
 
-    for i in range(1, len(list_item)):
-        if i == 1:
-            result = sum_big_number(list_item[0], list_item[1])
+    for i in range(1, len(list_sub_number)):
+        if i != 1:
+            result = sum_big_number(result, list_sub_number[i])
         else:
-            result = sum_big_number(result, list_item[i])
+            result = sum_big_number(list_sub_number[0], list_sub_number[1])
 
     print(result)
     return result
@@ -65,4 +65,7 @@ def sum_big_number(str_number1, str_number2) -> str:
 
 
 # print(sum_big_number('55', '55'))
-multiply_big_number('999', '2')
+start_time = datetime.now().timestamp()
+multiply_big_number(number_1, number_2)
+end_time = datetime.now().timestamp()
+print('total run-time: %f ms' % ((end_time - start_time) * 1000))
